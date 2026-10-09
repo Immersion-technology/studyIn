@@ -1,0 +1,9 @@
+.env
+.env.*
+.vercel
+node_modules
+data/queries.jsonl
+data/feedback.jsonl
+.qodo
+*.mov
+IMG_3257.png

@@ -1,0 +1,4 @@
+{
+  "_note": "Add StudyIn's partner schools here. Each entry needs a unique id, name, short name, country, two-letter country code (cc, matching a file in public/img/flags), city and the official website domain (used to steer research to official sources). Example: { \"id\": \"example\", \"name\": \"Example University\", \"short\": \"EU\", \"country\": \"United Kingdom\", \"cc\": \"gb\", \"city\": \"London\", \"website\": \"example.ac.uk\" }",
+  "schools": []
+}

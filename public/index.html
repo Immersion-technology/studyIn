@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StudyIn AI · Ask about your dream school</title>
+  <meta name="description" content="Ask StudyIn AI anything about our partner universities abroad: admissions, tuition, scholarships, visas and more. Researched answers in seconds." />
+  <meta name="theme-color" content="#051634" />
+  <link rel="icon" type="image/png" href="/img/logo-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600..900;1,9..144,600..900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="cursor-glow" aria-hidden="true"></div>
+  <div class="arches" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__logo" aria-label="StudyIn home">
+      <img src="/img/logo-light.png" alt="StudyIn" width="132" height="29" />
+      <span class="nav__badge">AI</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#ask">Ask AI</a>
+      <a href="#schools-strip">Partner schools</a>
+      <a href="#how">How it works</a>
+      <a href="#meet">Talk to us</a>
+    </nav>
+    <a href="#ask" class="btn btn--cyan btn--sm magnetic">Ask now <span class="chev">»</span></a>
+  </header>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__copy">
+        <span class="pill reveal"><span class="pill__dot"></span>StudyIn AI · powered by OpenAI</span>
+        <h1 class="hero__title">
+          <span class="split">Your future,</span>
+          <span class="split split--accent">researched.</span>
+        </h1>
+        <div class="hero__tagline reveal">
+          <span class="tagline-bar">Ask anything about</span>
+          <span class="rotator" aria-live="polite"><span class="rotator__word">tuition &amp; fees</span></span>
+        </div>
+        <p class="hero__lede reveal">
+          Name any university, type your question, and our AI advisor searches official sources
+          to give you a clear, complete answer on admissions, scholarships, visas, living costs and more.
+        </p>
+        <div class="hero__cta reveal">
+          <a href="#ask" class="btn btn--cyan btn--lg magnetic">Ask your question <span class="chev">»»</span></a>
+          <a href="#how" class="btn btn--ghost btn--lg">How it works</a>
+        </div>
+        <dl class="hero__stats reveal">
+          <div hidden><dt><span class="count" data-count-key="schools">0</span></dt><dd>Partner schools</dd></div>
+          <div hidden><dt><span class="count" data-count-key="countries">0</span></dt><dd>Countries</dd></div>
+          <div><dt>24/7</dt><dd>Always on</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="chevrons chevrons--hero"></div>
+        <div class="mosaic" id="mosaic">
+          <figure class="tile tile--a" data-depth="18"><img src="/img/students-laptops.jpg" alt="" /></figure>
+          <figure class="tile tile--b" data-depth="30"><img src="/img/student-portrait.jpg" alt="" /></figure>
+          <figure class="tile tile--c" data-depth="12"><img src="/img/panel-innovating.jpg" alt="" /></figure>
+          <figure class="tile tile--d" data-depth="24"><img src="/img/students-suits.jpg" alt="" /></figure>
+          <figure class="tile tile--e" data-depth="16"><img src="/img/students-hijab.jpg" alt="" /></figure>
+        </div>
+        <img class="hero__mark spin" src="/img/logo-mark.png" alt="" />
+        <div class="float-card float-card--search" data-depth="40">
+          <div class="float-card__row"><span class="dot-pulse"></span> Searching official sources…</div>
+          <div class="float-card__query">“MSc Data Science fees 2026/27”</div>
+        </div>
+        <div class="float-card float-card--glance" data-depth="50">
+          <div class="float-card__title">At a glance</div>
+          <div class="glance-row"><span>Intakes</span><b>Jan · Sep</b></div>
+          <div class="glance-row"><span>English</span><b>IELTS / waiver</b></div>
+          <div class="glance-row"><span>Scholarship</span><b>Available</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <section class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Connect</span><i>»</i><span class="o">Learn</span><i>»</i><span>Succeed</span><i>»</i><span class="o">Global</span><i>»</i><span>Insights</span><i>»</i><span class="o">Future Ready</span><i>»</i>
+        <span>Connect</span><i>»</i><span class="o">Learn</span><i>»</i><span>Succeed</span><i>»</i><span class="o">Global</span><i>»</i><span>Insights</span><i>»</i><span class="o">Future Ready</span><i>»</i>
+      </div>
+    </section>
+
+    <!-- ============ ASK APP ============ -->
+    <section class="ask" id="ask">
+      <header class="section-head reveal">
+        <span class="kicker"><span class="arrow-line"></span>The AI advisor</span>
+        <h2 class="section-title">Ask. We research. <em>You decide.</em></h2>
+        <p class="section-sub">Name any school (or none), then ask the question that has been on your mind.</p>
+      </header>
+
+      <div class="panel reveal">
+        <!-- Step 1 -->
+        <div class="step" id="step-school">
+          <div class="step__head">
+            <span class="step__num">01</span>
+            <div>
+              <h3 class="step__title">Which school?</h3>
+              <p class="step__hint" id="school-hint">Type any university, college or school, or leave it blank for general advice.</p>
+            </div>
+          </div>
+          <div class="school-field">
+            <label class="school-input">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5"/></svg>
+              <input id="school-input" type="text" maxlength="120" autocomplete="off" spellcheck="false"
+                placeholder="e.g. University of Toronto" aria-label="School name (optional)"
+                role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="school-suggest" />
+              <button type="button" class="school-input__clear" id="school-clear" aria-label="Clear school" hidden>
+                <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
+              </button>
+            </label>
+            <ul class="suggest" id="school-suggest" role="listbox" aria-label="Partner schools" hidden></ul>
+          </div>
+          <h4 class="partners-title" id="partners-title" hidden>Or pick a StudyIn partner school</h4>
+          <div class="school-tools" hidden>
+            <label class="search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input id="school-search" type="search" placeholder="Search by school, city or country" autocomplete="off" aria-label="Search schools" />
+            </label>
+            <div class="chips chips--filter" id="country-filters" role="tablist" aria-label="Filter by country"></div>
+          </div>
+          <div class="school-grid" id="school-grid" role="radiogroup" aria-label="Partner schools"></div>
+          <p class="empty-note" id="school-empty" hidden>No partner schools match that search.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step" id="step-prompt">
+          <div class="step__head">
+            <span class="step__num">02</span>
+            <div>
+              <h3 class="step__title">Ask your question</h3>
+              <p class="step__hint">Be specific: your course, level, intake or budget helps the AI give a sharper answer.</p>
+            </div>
+          </div>
+
+          <div class="topic-chips chips" id="topic-chips" aria-label="Question ideas"></div>
+
+          <form class="composer" id="composer" autocomplete="off">
+            <div class="composer__school" id="composer-school">
+              <span class="composer__school-flag" id="composer-flag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5"/></svg></span>
+              <span id="composer-school-name">Any school</span>
+            </div>
+            <textarea id="prompt" rows="3" maxlength="1500" aria-label="Your question" placeholder=""></textarea>
+            <div class="composer__bar">
+              <span class="composer__count"><span id="char-count">0</span>/1500</span>
+              <span class="composer__kbd">Ctrl + Enter to send</span>
+              <button type="submit" class="btn btn--cyan magnetic" id="ask-btn">
+                <span class="btn__label">Research this</span>
+                <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Result -->
+        <article class="result" id="result" hidden aria-live="polite">
+          <header class="result__head">
+            <div>
+              <div class="result__school" id="result-school"></div>
+              <h3 class="result__question" id="result-question"></h3>
+              <div class="result__meta">
+                <span class="tag tag--cat" id="result-category" hidden></span>
+                <span class="tag tag--flag" id="result-flag-tag" hidden>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>Off-topic
+                </span>
+                <span class="tag" id="result-timer">0.0s</span>
+              </div>
+            </div>
+            <button class="btn btn--ghost btn--sm" id="cancel-btn" type="button">Stop</button>
+          </header>
+
+          <ol class="tracker" id="tracker">
+            <li data-stage="thinking"><span class="tracker__icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3Z"/></svg></span>Understanding</li>
+            <li data-stage="searching"><span class="tracker__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>Searching</li>
+            <li data-stage="reading"><span class="tracker__icon"><svg viewBox="0 0 24 24"><path d="M4 5h6a3 3 0 0 1 3 3v11a2 2 0 0 0-2-2H4zM20 5h-6a3 3 0 0 0-3 3v11a2 2 0 0 1 2-2h7z"/></svg></span>Reading sources</li>
+            <li data-stage="writing"><span class="tracker__icon"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4"/></svg></span>Compiling answer</li>
+          </ol>
+          <div class="flag-note" id="flag-note" role="note" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg>
+            <p><strong>This question looks outside school research.</strong> StudyIn AI works best for questions about
+            universities, courses, admissions, fees, scholarships, visas and student life.</p>
+          </div>
+          <div class="activity" id="activity"></div>
+
+          <div class="answer" id="answer">
+            <div class="skeleton" id="skeleton">
+              <span></span><span></span><span></span><span class="short"></span>
+            </div>
+            <div class="answer__body md" id="answer-body"></div>
+          </div>
+
+          <div class="result__error" id="result-error" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg>
+            <div><strong>We hit a snag.</strong> <span id="result-error-text"></span></div>
+            <button class="btn btn--ghost btn--sm" id="retry-btn" type="button">Try again</button>
+          </div>
+
+          <section class="sources" id="sources" hidden>
+            <h4 class="sources__title">Sources <span id="source-count"></span></h4>
+            <div class="sources__grid" id="sources-grid"></div>
+          </section>
+
+          <footer class="result__foot" id="result-foot" hidden>
+            <div class="actions">
+              <button class="btn btn--ghost btn--sm" data-action="copy" type="button">
+                <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>Copy
+              </button>
+              <button class="btn btn--ghost btn--sm" data-action="download" type="button">
+                <svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>Download
+              </button>
+              <button class="btn btn--ghost btn--sm" data-action="print" type="button">
+                <svg viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 17H5a1 1 0 0 1-1-1v-5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a1 1 0 0 1-1 1h-2M7 14h10v6H7z"/></svg>Print / PDF
+              </button>
+            </div>
+            <div class="feedback" id="feedback">
+              <span>Was this helpful?</span>
+              <button class="fb" data-rating="up" type="button" aria-label="Helpful"><svg viewBox="0 0 24 24"><path d="M7 11v9H4v-9zM7 11l4-7a2 2 0 0 1 2 2v4h5.5a2 2 0 0 1 2 2.3l-1.2 6A2 2 0 0 1 17.3 20H7"/></svg></button>
+              <button class="fb" data-rating="down" type="button" aria-label="Not helpful"><svg viewBox="0 0 24 24"><path d="M17 13V4h3v9zM17 13l-4 7a2 2 0 0 1-2-2v-4H5.5a2 2 0 0 1-2-2.3l1.2-6A2 2 0 0 1 6.7 4H17"/></svg></button>
+            </div>
+          </footer>
+
+          <div class="followups" id="followups" hidden>
+            <span class="followups__label">Ask next</span>
+            <div class="chips" id="followup-chips"></div>
+          </div>
+        </article>
+
+        <div class="recents" id="recents" hidden>
+          <h4>Your recent questions</h4>
+          <ul id="recent-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCHOOL STRIP ============ -->
+    <section class="strip" id="schools-strip" aria-label="Partner schools">
+      <div class="strip__track" id="strip-track"></div>
+    </section>
+
+    <!-- ============ HOW ============ -->
+    <section class="how" id="how">
+      <header class="section-head reveal">
+        <span class="kicker"><span class="arrow-line"></span>How it works</span>
+        <h2 class="section-title">From question to <em>clarity</em> in under a minute.</h2>
+      </header>
+      <div class="how__grid">
+        <article class="how-card reveal">
+          <span class="how-card__num">01</span>
+          <div class="how-card__img"><img src="/img/students-table.jpg" alt="Students researching at a StudyIn fair" loading="lazy" /></div>
+          <h3>Name your school</h3>
+          <p>Type any university or college abroad, or leave it blank and ask a general question about studying overseas.</p>
+        </article>
+        <article class="how-card reveal">
+          <span class="how-card__num">02</span>
+          <div class="how-card__img"><img src="/img/ai-mentor.jpg" alt="A mentor guiding a student at a computer" loading="lazy" /></div>
+          <h3>AI researches live</h3>
+          <p>Our AI searches the school's official pages and government sources, reads them, and checks the details that matter to you.</p>
+        </article>
+        <article class="how-card reveal">
+          <span class="how-card__num">03</span>
+          <div class="how-card__img"><img src="/img/panel-2025.jpg" alt="Panel at the StudyIn Global Study Conference" loading="lazy" /></div>
+          <h3>Get a complete brief</h3>
+          <p>Receive a structured answer with key facts, costs, requirements, tips and next steps, with links to every source.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ MEET (kinetic) ============ -->
+    <section class="meet" id="meet">
+      <div class="meet__stage reveal" aria-hidden="true">
+        <img src="/img/student-portrait.jpg" alt="" class="meet__img is-on" />
+        <img src="/img/students-laptops.jpg" alt="" class="meet__img" />
+        <img src="/img/students-suits.jpg" alt="" class="meet__img" />
+        <img src="/img/panel-2025.jpg" alt="" class="meet__img" />
+        <span class="meet__word" id="meet-word">Connect</span>
+      </div>
+      <div class="meet__copy reveal">
+        <span class="kicker"><span class="arrow-line"></span>Built for your future</span>
+        <h2 class="section-title">Prefer a human? <em>Meet us.</em></h2>
+        <p class="section-sub">
+          The AI gets you informed fast. Our counsellors get you admitted. Book a free session to review your options,
+          your documents and your timeline with a StudyIn expert.
+        </p>
+        <div class="contact-cards">
+          <a class="contact-card" id="contact-email" href="mailto:lagos@gostudyin.com">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span><small>Email</small><b>lagos@gostudyin.com</b></span>
+          </a>
+          <a class="contact-card" id="contact-phone" href="tel:+2348109124550">
+            <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+            <span><small>Call</small><b>+234 810 912 4550</b></span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="chevrons chevrons--footer" aria-hidden="true"></div>
+    <img src="/img/logo-light.png" alt="StudyIn" width="150" height="33" />
+    <p class="footer__note">
+      Answers are generated by AI from public sources and can contain mistakes. Always confirm fees, deadlines and visa rules
+      with the university or a StudyIn counsellor before you act.
+    </p>
+    <p class="footer__small">© <span id="year"></span> StudyIn · AI research powered by OpenAI</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/vendor/marked.js"></script>
+  <script src="/vendor/purify.js"></script>
+  <script src="/js/app.js" type="module"></script>
+</body>
+</html>

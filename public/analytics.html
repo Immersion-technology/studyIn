@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StudyIn AI Analytics</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#051634" />
+  <link rel="icon" type="image/png" href="/img/logo-mark.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600..900;1,9..144,600..900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/analytics.css" />
+</head>
+<body>
+  <header class="top">
+    <a href="/" class="top__brand" aria-label="Back to StudyIn AI">
+      <img src="/img/logo-light.png" alt="StudyIn" width="120" height="27" />
+      <span class="top__label">AI Analytics</span>
+    </a>
+    <div class="top__right">
+      <span class="live" id="live"><span class="live__dot"></span><span id="updated">Loading…</span></span>
+      <a class="btn btn--ghost btn--sm" href="/">Open site</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <div>
+        <h1>How visitors use <em>StudyIn AI</em></h1>
+        <p class="muted" id="range-note">Questions, outcomes and topics across partner schools.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filters">
+        <div class="seg" id="range" role="radiogroup" aria-label="Date range">
+          <button type="button" data-days="7" role="radio">7 days</button>
+          <button type="button" data-days="30" role="radio" aria-checked="true">30 days</button>
+          <button type="button" data-days="90" role="radio">90 days</button>
+          <button type="button" data-days="all" role="radio">All time</button>
+        </div>
+        <label class="select">
+          <span class="sr-only">School</span>
+          <select id="school-filter"><option value="">All schools</option></select>
+        </label>
+        <label class="switch" title="Show only questions flagged as outside school research">
+          <input type="checkbox" id="flagged-toggle" />
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+          <span>Flagged only</span>
+        </label>
+        <label class="switch" title="Preview the dashboard with generated sample data">
+          <input type="checkbox" id="demo-toggle" />
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+          <span>Sample data</span>
+        </label>
+        <button type="button" class="btn btn--ghost btn--sm" id="refresh"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>Refresh</button>
+        <button type="button" class="btn btn--cyan btn--sm" id="export"><svg viewBox="0 0 24 24"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14"/></svg>Export CSV</button>
+      </div>
+    </section>
+
+    <div class="banner" id="demo-banner" hidden>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+      You're viewing generated <b>sample data</b>. Turn off “Sample data” to see real visitor activity.
+    </div>
+    <div class="banner banner--warn" id="storage-banner" hidden>
+      <svg viewBox="0 0 24 24"><path d="M12 3 2 20h20zM12 10v4M12 17v.5"/></svg>
+      <span><b>Analytics storage isn't connected.</b> Records are kept only temporarily on this deployment. Connect an
+      Upstash Redis database to the Vercel project (Storage tab) and redeploy to keep them.</span>
+    </div>
+    <div class="banner banner--empty" id="empty-banner" hidden>
+      No questions recorded in this period yet. Once visitors start asking, their activity appears here.
+      Switch on “Sample data” to preview the dashboard.
+    </div>
+
+    <!-- KPIs -->
+    <section class="kpis" id="kpis" aria-label="Key figures">
+      <article class="kpi kpi--hero">
+        <span class="kpi__label">Total questions</span>
+        <span class="kpi__value" data-kpi="total">–</span>
+        <span class="kpi__delta" data-delta="total"></span>
+        <svg class="spark" id="spark" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </article>
+      <article class="kpi">
+        <span class="kpi__label"><i class="key key--ok"></i>Succeeded</span>
+        <span class="kpi__value" data-kpi="success">–</span>
+        <span class="kpi__sub" data-sub="success"></span>
+      </article>
+      <article class="kpi">
+        <span class="kpi__label"><i class="key key--fail"></i>Failed</span>
+        <span class="kpi__value" data-kpi="failed">–</span>
+        <span class="kpi__sub" data-sub="failed"></span>
+      </article>
+      <article class="kpi">
+        <span class="kpi__label">Success rate</span>
+        <span class="kpi__value" data-kpi="successRate">–</span>
+        <span class="meter"><span class="meter__fill" id="rate-meter"></span></span>
+        <span class="kpi__delta" data-delta="successRate"></span>
+      </article>
+      <article class="kpi">
+        <span class="kpi__label">Median response time</span>
+        <span class="kpi__value" data-kpi="p50LatencyMs">–</span>
+        <span class="kpi__sub" data-sub="latency"></span>
+      </article>
+      <article class="kpi">
+        <span class="kpi__label">Unique visitors</span>
+        <span class="kpi__value" data-kpi="uniqueVisitors">–</span>
+        <span class="kpi__sub" data-sub="visitors"></span>
+      </article>
+    </section>
+
+    <section class="minis" aria-label="Quality and cost">
+      <div class="mini"><span>Helpful rating</span><b data-kpi="satisfaction">–</b><small data-sub="satisfaction"></small></div>
+      <div class="mini"><span>Sources per answer</span><b data-kpi="avgSources">–</b><small>avg. on successful answers</small></div>
+      <div class="mini"><span>Web searches run</span><b data-kpi="searches">–</b><small data-sub="searches"></small></div>
+      <div class="mini"><span>Est. AI cost</span><b data-kpi="estCostUsd">–</b><small data-sub="cost"></small></div>
+      <div class="mini"><span>Cancelled by visitor</span><b data-kpi="cancelled">–</b><small>stopped before finishing</small></div>
+      <div class="mini mini--flag"><span><i class="flag-ico"></i>Flagged off-topic</span><b data-kpi="flagged">–</b><small data-sub="flagged"></small></div>
+    </section>
+
+    <!-- Charts -->
+    <section class="grid">
+      <article class="card card--wide" data-chart="daily">
+        <header class="card__head">
+          <div>
+            <h2>Questions per day</h2>
+            <p class="muted">Outcome of every question, by day</p>
+          </div>
+          <div class="card__tools">
+            <div class="legend" id="daily-legend"></div>
+            <button type="button" class="link-btn" data-table-toggle>Table</button>
+          </div>
+        </header>
+        <div class="chart" id="chart-daily"></div>
+        <div class="table-view" hidden></div>
+      </article>
+
+      <article class="card" data-chart="category">
+        <header class="card__head">
+          <div>
+            <h2>Query categories</h2>
+            <p class="muted">What visitors ask about</p>
+          </div>
+          <button type="button" class="link-btn" data-table-toggle>Table</button>
+        </header>
+        <div class="chart" id="chart-category"></div>
+        <div class="table-view" hidden></div>
+      </article>
+
+      <article class="card" data-chart="schools">
+        <header class="card__head">
+          <div>
+            <h2>Most-asked schools</h2>
+            <p class="muted">Schools visitors asked about, typed or detected</p>
+          </div>
+          <button type="button" class="link-btn" data-table-toggle>Table</button>
+        </header>
+        <div class="chart" id="chart-schools"></div>
+        <div class="table-view" hidden></div>
+      </article>
+
+      <article class="card" data-chart="hours">
+        <header class="card__head">
+          <div>
+            <h2>When visitors ask</h2>
+            <p class="muted" id="hours-note">Questions by hour of day</p>
+          </div>
+          <button type="button" class="link-btn" data-table-toggle>Table</button>
+        </header>
+        <div class="chart" id="chart-hours"></div>
+        <div class="table-view" hidden></div>
+      </article>
+
+      <article class="card" data-chart="errors">
+        <header class="card__head">
+          <div>
+            <h2>Why questions failed</h2>
+            <p class="muted">Failure reasons</p>
+          </div>
+          <button type="button" class="link-btn" data-table-toggle>Table</button>
+        </header>
+        <div class="chart" id="chart-errors"></div>
+        <div class="table-view" hidden></div>
+      </article>
+
+      <article class="card" data-chart="countries">
+        <header class="card__head">
+          <div>
+            <h2>Destination countries</h2>
+            <p class="muted">Where the schools asked about are</p>
+          </div>
+          <button type="button" class="link-btn" data-table-toggle>Table</button>
+        </header>
+        <div class="chart" id="chart-countries"></div>
+        <div class="table-view" hidden></div>
+      </article>
+
+      <article class="card" data-chart="satisfaction">
+        <header class="card__head">
+          <div>
+            <h2>Visitor feedback</h2>
+            <p class="muted">Helpful vs not helpful ratings</p>
+          </div>
+        </header>
+        <div class="feedback-viz" id="feedback-viz"></div>
+      </article>
+    </section>
+
+    <!-- Recent -->
+    <section class="card card--table">
+      <header class="card__head">
+        <div>
+          <h2>Recent questions</h2>
+          <p class="muted">Latest 40 in this period</p>
+        </div>
+        <label class="search">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="recent-search" placeholder="Filter questions" aria-label="Filter recent questions" />
+        </label>
+      </header>
+      <div class="table-scroll">
+        <table class="data" id="recent-table">
+          <thead>
+            <tr><th>When</th><th>School</th><th>Category</th><th>Question</th><th>Status</th><th class="num">Time</th><th class="num">Sources</th><th>Rating</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+
+  <!-- admin key gate -->
+  <div class="gate" id="gate" hidden>
+    <form class="gate__card" id="gate-form">
+      <img src="/img/logo-light.png" alt="StudyIn" width="140" height="31" />
+      <h2>Analytics access</h2>
+      <p class="muted" id="gate-msg">Enter the admin key to view the dashboard.</p>
+      <input type="password" id="gate-key" placeholder="Admin key" autocomplete="current-password" required />
+      <button class="btn btn--cyan" type="submit">Unlock</button>
+    </form>
+  </div>
+
+  <script src="/js/analytics.js" type="module"></script>
+</body>
+</html>
