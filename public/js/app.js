@@ -31,10 +31,7 @@ const visitorId = (() => {
 })();
 
 const ICONS = {
-  search: '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
-  page: '<svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>',
   check: '<svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>',
-  chev: '<svg viewBox="0 0 24 24"><path d="m7 4 8 8-8 8"/></svg>',
   cap: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5"/></svg>',
 };
 
@@ -86,15 +83,10 @@ init();
 
 async function init() {
   $("#year").textContent = new Date().getFullYear();
-  buildChevrons();
   splitHeadline();
   setupReveal();
   setupNav();
-  setupCursor();
-  setupParallax();
-  setupMagnetic();
   rotateTagline();
-  setupMeet();
   requestAnimationFrame(() => document.body.classList.add("is-ready"));
 
   try {
@@ -105,7 +97,6 @@ async function init() {
   } catch {
     toast("Couldn't load the school list. Please refresh the page.");
   }
-  animateCounts();
   setupSchoolInput();
   renderCountryFilters();
   renderSchools();
@@ -116,16 +107,7 @@ async function init() {
   renderRecents();
 }
 
-/* ================= decoration & motion ================= */
-function buildChevrons() {
-  for (const el of $$(".chevrons")) {
-    const rows = el.classList.contains("chevrons--footer") ? 2 : 4;
-    let html = "";
-    for (let r = 0; r < rows; r++) for (let c = 0; c < 6; c++) html += `<i style="--i:${c + r * 2}">${ICONS.chev}</i>`;
-    el.innerHTML = html;
-  }
-}
-
+/* ================= motion ================= */
 function splitHeadline() {
   let i = 0;
   for (const line of $$(".split")) {
@@ -159,49 +141,8 @@ function setupNav() {
   onScroll();
 }
 
-function setupCursor() {
-  if (reduceMotion || matchMedia("(pointer: coarse)").matches) return;
-  const root = document.documentElement;
-  addEventListener("pointermove", (e) => {
-    root.style.setProperty("--mx", e.clientX + "px");
-    root.style.setProperty("--my", e.clientY + "px");
-  }, { passive: true });
-}
-
-function setupParallax() {
-  if (reduceMotion) return;
-  const hero = $(".hero");
-  const layers = $$(".hero [data-depth]");
-  hero.addEventListener("pointermove", (e) => {
-    const r = hero.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    for (const el of layers) {
-      const d = Number(el.dataset.depth);
-      el.style.setProperty("--px", `${(-x * d).toFixed(1)}px`);
-      el.style.setProperty("--py", `${(-y * d).toFixed(1)}px`);
-    }
-  });
-  hero.addEventListener("pointerleave", () => layers.forEach((el) => { el.style.setProperty("--px", "0px"); el.style.setProperty("--py", "0px"); }));
-}
-
-function setupMagnetic() {
-  if (reduceMotion || matchMedia("(pointer: coarse)").matches) return;
-  document.addEventListener("pointermove", (e) => {
-    const btn = e.target.closest?.(".magnetic");
-    if (!btn) return;
-    const r = btn.getBoundingClientRect();
-    const x = (e.clientX - r.left - r.width / 2) * 0.22;
-    const y = (e.clientY - r.top - r.height / 2) * 0.3;
-    btn.style.transform = `translate(${x}px, ${y}px)`;
-  });
-  document.addEventListener("pointerout", (e) => {
-    const btn = e.target.closest?.(".magnetic");
-    if (btn && !btn.contains(e.relatedTarget)) btn.style.transform = "";
-  });
-}
-
 function rotateTagline() {
+  if (reduceMotion) return;
   const words = ["tuition & fees", "scholarships", "student visas", "entry requirements", "accommodation", "post-study work", "intakes & deadlines"];
   const host = $(".rotator");
   let i = 0;
@@ -214,47 +155,7 @@ function rotateTagline() {
     next.className = "rotator__word";
     next.textContent = words[i];
     host.append(next);
-  }, 2400);
-}
-
-function animateCounts() {
-  const values = { schools: state.schools.length, countries: new Set(state.schools.map((s) => s.country)).size };
-  for (const el of $$("[data-count-key]")) {
-    const target = values[el.dataset.countKey] || 0;
-    el.closest("div").hidden = !target;
-    if (reduceMotion) { el.textContent = target; continue; }
-    const t0 = performance.now();
-    const tick = (t) => {
-      const p = Math.min(1, (t - t0) / 1400);
-      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }
-}
-
-function setupMeet() {
-  const stage = $(".meet__stage");
-  const imgs = $$(".meet__img", stage);
-  const wordEl = $("#meet-word");
-  const words = ["Connect", "Learn", "Ask", "Meet reps", "Succeed", "Go global"];
-  let i = 0;
-  let timer = null;
-  const step = () => {
-    i++;
-    wordEl.textContent = words[i % words.length];
-    wordEl.classList.remove("flash");
-    void wordEl.offsetWidth;
-    wordEl.classList.add("flash");
-    if (i % 2 === 0) {
-      imgs.forEach((im) => im.classList.remove("is-on"));
-      imgs[(i / 2) % imgs.length].classList.add("is-on");
-    }
-  };
-  new IntersectionObserver(([e]) => {
-    if (e.isIntersecting && !timer && !reduceMotion) timer = setInterval(step, 1700);
-    else if (!e.isIntersecting && timer) { clearInterval(timer); timer = null; }
-  }).observe(stage);
+  }, 3200);
 }
 
 function setupContact(contact) {
@@ -446,20 +347,8 @@ function renderSchools() {
     b.querySelector(".school__name").textContent = s.name;
     b.querySelector(".school__city").textContent = `${s.city} · ${s.country}`;
     b.addEventListener("click", () => selectSchool(s.id));
-    addTilt(b);
     grid.append(b);
   });
-}
-
-function addTilt(el) {
-  if (reduceMotion || matchMedia("(pointer: coarse)").matches) return;
-  el.addEventListener("pointermove", (e) => {
-    const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(700px) rotateX(${(-y * 8).toFixed(2)}deg) rotateY(${(x * 10).toFixed(2)}deg) translateY(-3px)`;
-  });
-  el.addEventListener("pointerleave", () => (el.style.transform = ""));
 }
 
 function selectSchool(id, { scroll = false } = {}) {
@@ -609,9 +498,8 @@ function resetResult(school, prompt) {
   $("#result-timer").textContent = "0.0s";
   $("#tracker").hidden = false;
   $$("#tracker li").forEach((li) => li.classList.remove("is-active", "is-done"));
-  $("#activity").innerHTML = "";
   $("#answer-body").innerHTML = "";
-  $("#skeleton").hidden = false;
+  setWaiting(false);
   $("#result-error").hidden = true;
   $("#sources").hidden = true;
   $("#sources-grid").innerHTML = "";
@@ -624,14 +512,18 @@ function resetResult(school, prompt) {
   $$(".fb", fb).forEach((b) => b.classList.remove("is-chosen"));
 }
 
-function addActivity(kind, text) {
-  const host = $("#activity");
-  if (host.children.length >= 14) return;
-  const el = document.createElement("span");
-  el.className = "activity__item";
-  el.innerHTML = `${kind === "search" ? ICONS.search : ICONS.page}<span></span>`;
-  el.querySelector("span").textContent = text;
-  host.append(el);
+/** While researching, a looping StudyIn ad fills the answer area instead of sources. */
+function setWaiting(on) {
+  const box = $("#waiting");
+  const video = $("#waiting-video");
+  box.hidden = !on;
+  if (on) {
+    // Loaded on first use so the page itself stays light.
+    if (!video.getAttribute("src")) video.src = "/video/studyin-ad.mp4";
+    if (!reduceMotion) video.play().catch(() => {}); // the poster stays if autoplay is blocked
+  } else {
+    video.pause();
+  }
 }
 
 const domainOf = (url) => {
@@ -695,6 +587,7 @@ function renderMarkdown(text, { streaming = false } = {}) {
 
 async function ask(school, prompt) {
   resetResult(school, prompt);
+  setWaiting(true);
   $("#result").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   const panel = $(".panel");
   const btn = $("#ask-btn");
@@ -715,7 +608,7 @@ async function ask(school, prompt) {
     if (frame) return;
     frame = requestAnimationFrame(() => {
       frame = 0;
-      $("#skeleton").hidden = true;
+      setWaiting(false);
       renderMarkdown(run.answer, { streaming: true });
     });
   };
@@ -725,7 +618,7 @@ async function ask(school, prompt) {
     const since = run.answer.slice(run.checkpoint);
     if (since.trim() && since.length < 600) {
       run.answer = run.answer.slice(0, run.checkpoint);
-      if (!run.answer) { $("#answer-body").innerHTML = ""; $("#skeleton").hidden = false; }
+      if (!run.answer) { $("#answer-body").innerHTML = ""; setWaiting(true); }
       else scheduleRender();
     }
     run.checkpoint = run.answer.length;
@@ -751,9 +644,8 @@ async function ask(school, prompt) {
       if (["searching", "reading", "analysing"].includes(d.stage)) dropPreamble();
       setStage(d.stage);
     },
-    search: (d) => addActivity("search", d.query),
-    fetch: (d) => addActivity("fetch", domainOf(d.url)),
-    source: (d) => { run.sources.push(d); addSource(d); },
+    // Sources are collected quietly and shown once the answer is complete.
+    source: (d) => run.sources.push(d),
     text: (d) => { run.answer += d.delta; scheduleRender(); },
     done: (d) => { run.ok = true; run.meta = d; },
     error: (d) => { run.error = d.message; },
@@ -804,7 +696,7 @@ async function ask(school, prompt) {
     btn.classList.remove("is-loading");
     btn.querySelector(".btn__label").textContent = "Research this";
     $("#cancel-btn").hidden = true;
-    $("#skeleton").hidden = true;
+    setWaiting(false);
     finalise(run);
   }
 }
@@ -813,6 +705,7 @@ function finalise(run) {
   if (run.answer) renderMarkdown(run.answer);
   if (run.ok) {
     finishTracker();
+    for (const s of run.sources) addSource(s);
     $("#result-foot").hidden = false;
     showFollowups(run.category);
     saveRecent(run);
@@ -949,7 +842,6 @@ function renderRecents() {
 function openRecent(r, school) {
   if (state.running) return;
   resetResult(school, r.prompt);
-  $("#skeleton").hidden = true;
   $("#cancel-btn").hidden = true;
   $("#tracker").hidden = true;
   if (r.category && !r.flagged) {

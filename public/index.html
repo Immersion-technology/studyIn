@@ -13,9 +13,6 @@
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
-  <div class="cursor-glow" aria-hidden="true"></div>
-  <div class="arches" aria-hidden="true"></div>
-
   <!-- ============ NAV ============ -->
   <header class="nav" id="nav">
     <a href="#top" class="nav__logo" aria-label="StudyIn home">
@@ -28,14 +25,14 @@
       <a href="#how">How it works</a>
       <a href="#meet">Talk to us</a>
     </nav>
-    <a href="#ask" class="btn btn--cyan btn--sm magnetic">Ask now <span class="chev">»</span></a>
+    <a href="#ask" class="btn btn--cyan btn--sm">Ask now <span class="chev">»</span></a>
   </header>
 
   <main id="top">
     <!-- ============ HERO ============ -->
     <section class="hero">
       <div class="hero__copy">
-        <span class="pill reveal"><span class="pill__dot"></span>StudyIn AI · powered by OpenAI</span>
+        <span class="pill reveal"><span class="pill__dot"></span>StudyIn AI · powered by Immersion Technologies</span>
         <h1 class="hero__title">
           <span class="split">Your future,</span>
           <span class="split split--accent">researched.</span>
@@ -49,44 +46,14 @@
           to give you a clear, complete answer on admissions, scholarships, visas, living costs and more.
         </p>
         <div class="hero__cta reveal">
-          <a href="#ask" class="btn btn--cyan btn--lg magnetic">Ask your question <span class="chev">»»</span></a>
+          <a href="#ask" class="btn btn--cyan btn--lg">Ask your question <span class="chev">»»</span></a>
           <a href="#how" class="btn btn--ghost btn--lg">How it works</a>
         </div>
-        <dl class="hero__stats reveal">
-          <div hidden><dt><span class="count" data-count-key="schools">0</span></dt><dd>Partner schools</dd></div>
-          <div hidden><dt><span class="count" data-count-key="countries">0</span></dt><dd>Countries</dd></div>
-          <div><dt>24/7</dt><dd>Always on</dd></div>
-        </dl>
       </div>
 
       <div class="hero__visual" aria-hidden="true">
-        <div class="chevrons chevrons--hero"></div>
-        <div class="mosaic" id="mosaic">
-          <figure class="tile tile--a" data-depth="18"><img src="/img/students-laptops.jpg" alt="" /></figure>
-          <figure class="tile tile--b" data-depth="30"><img src="/img/student-portrait.jpg" alt="" /></figure>
-          <figure class="tile tile--c" data-depth="12"><img src="/img/panel-innovating.jpg" alt="" /></figure>
-          <figure class="tile tile--d" data-depth="24"><img src="/img/students-suits.jpg" alt="" /></figure>
-          <figure class="tile tile--e" data-depth="16"><img src="/img/students-hijab.jpg" alt="" /></figure>
-        </div>
-        <img class="hero__mark spin" src="/img/logo-mark.png" alt="" />
-        <div class="float-card float-card--search" data-depth="40">
-          <div class="float-card__row"><span class="dot-pulse"></span> Searching official sources…</div>
-          <div class="float-card__query">“MSc Data Science fees 2026/27”</div>
-        </div>
-        <div class="float-card float-card--glance" data-depth="50">
-          <div class="float-card__title">At a glance</div>
-          <div class="glance-row"><span>Intakes</span><b>Jan · Sep</b></div>
-          <div class="glance-row"><span>English</span><b>IELTS / waiver</b></div>
-          <div class="glance-row"><span>Scholarship</span><b>Available</b></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ MARQUEE ============ -->
-    <section class="marquee" aria-hidden="true">
-      <div class="marquee__track">
-        <span>Connect</span><i>»</i><span class="o">Learn</span><i>»</i><span>Succeed</span><i>»</i><span class="o">Global</span><i>»</i><span>Insights</span><i>»</i><span class="o">Future Ready</span><i>»</i>
-        <span>Connect</span><i>»</i><span class="o">Learn</span><i>»</i><span>Succeed</span><i>»</i><span class="o">Global</span><i>»</i><span>Insights</span><i>»</i><span class="o">Future Ready</span><i>»</i>
+        <figure class="tile tile--main"><img src="/img/student-portrait.jpg" alt="" /></figure>
+        <figure class="tile tile--side"><img src="/img/students-laptops.jpg" alt="" /></figure>
       </div>
     </section>
 
@@ -153,7 +120,7 @@
             <div class="composer__bar">
               <span class="composer__count"><span id="char-count">0</span>/1500</span>
               <span class="composer__kbd">Ctrl + Enter to send</span>
-              <button type="submit" class="btn btn--cyan magnetic" id="ask-btn">
+              <button type="submit" class="btn btn--cyan" id="ask-btn">
                 <span class="btn__label">Research this</span>
                 <svg class="btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </button>
@@ -189,11 +156,14 @@
             <p><strong>This question looks outside school research.</strong> StudyIn AI works best for questions about
             universities, courses, admissions, fees, scholarships, visas and student life.</p>
           </div>
-          <div class="activity" id="activity"></div>
-
           <div class="answer" id="answer">
-            <div class="skeleton" id="skeleton">
-              <span></span><span></span><span></span><span class="short"></span>
+            <div class="waiting" id="waiting" hidden>
+              <video class="waiting__video" id="waiting-video" muted loop playsinline preload="none"
+                poster="/video/studyin-ad-poster.jpg" aria-hidden="true"></video>
+              <div class="waiting__text">
+                <strong>Researching official sources…</strong>
+                <span>This usually takes under a minute. Your answer will appear here.</span>
+              </div>
             </div>
             <div class="answer__body md" id="answer-body"></div>
           </div>
@@ -276,12 +246,8 @@
 
     <!-- ============ MEET (kinetic) ============ -->
     <section class="meet" id="meet">
-      <div class="meet__stage reveal" aria-hidden="true">
-        <img src="/img/student-portrait.jpg" alt="" class="meet__img is-on" />
-        <img src="/img/students-laptops.jpg" alt="" class="meet__img" />
-        <img src="/img/students-suits.jpg" alt="" class="meet__img" />
-        <img src="/img/panel-2025.jpg" alt="" class="meet__img" />
-        <span class="meet__word" id="meet-word">Connect</span>
+      <div class="meet__stage reveal">
+        <img src="/img/panel-2025.jpg" alt="StudyIn Global Study Conference panel" class="meet__img" />
       </div>
       <div class="meet__copy reveal">
         <span class="kicker"><span class="arrow-line"></span>Built for your future</span>
@@ -305,13 +271,12 @@
   </main>
 
   <footer class="footer">
-    <div class="chevrons chevrons--footer" aria-hidden="true"></div>
     <img src="/img/logo-light.png" alt="StudyIn" width="150" height="33" />
     <p class="footer__note">
       Answers are generated by AI from public sources and can contain mistakes. Always confirm fees, deadlines and visa rules
       with the university or a StudyIn counsellor before you act.
     </p>
-    <p class="footer__small">© <span id="year"></span> StudyIn · AI research powered by OpenAI</p>
+    <p class="footer__small">© <span id="year"></span> StudyIn · AI research powered by Immersion Technologies</p>
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
